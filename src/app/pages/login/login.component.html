@@ -3,7 +3,6 @@
     <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Sign In</h2>
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
-      <!-- Username -->
       <div class="relative z-0 w-full mb-6 group">
         <input
           type="text"
@@ -21,7 +20,6 @@
         </label>
       </div>
 
-      <!-- Password -->
       <div class="relative z-0 w-full mb-6 group">
         <input
           type="password"
@@ -39,7 +37,6 @@
         </label>
       </div>
 
-      <!-- Submit -->
       <button
         type="submit"
         [disabled]="loginForm.invalid"
@@ -49,7 +46,6 @@
       </button>
     </form>
 
-    <!-- Signup Link -->
     <p class="mt-4 text-sm text-center text-gray-500">
       Don’t have an account?
       <a routerLink="/register" class="text-blue-600 hover:underline">

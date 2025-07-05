@@ -41,10 +41,10 @@ export class AppComponent {
   logout() {
     this.cookieService.delete('token');
     this.isLoggedIn.set(false);
-    this.router.navigate(['/auth/login']);
+    this.router.navigate(['/login']);
   }
   shouldShowNavBar(): boolean {
-    const hiddenRoutes = ['/auth/login', '/auth/register'];
+    const hiddenRoutes = ['/login', '/register'];
     return !hiddenRoutes.includes(this.router.url);
   }
 }

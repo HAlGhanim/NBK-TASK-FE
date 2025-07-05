@@ -16,7 +16,6 @@ import { ToastService } from '../../services/component-services/toast.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
-  providers: [CookieService],
 })
 export class LoginComponent {
   loginForm!: FormGroup;

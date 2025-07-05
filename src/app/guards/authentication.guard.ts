@@ -17,7 +17,7 @@ export const authenticationGuard: CanActivateFn = (
   const token = cookieService.get('token');
 
   if (!token) {
-    router.navigate(['/auth/login'], {
+    router.navigate(['/login'], {
       queryParams: { returnUrl: state.url },
     });
     return false;

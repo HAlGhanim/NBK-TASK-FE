@@ -9,7 +9,6 @@ export const ErrorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
       console.error(`HTTP Error: ${error.status}`, error.message);
-      toast.error('Something went wrong. Check console and try again.');
       return throwError(() => error);
     })
   );

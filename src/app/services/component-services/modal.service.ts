@@ -5,10 +5,15 @@ import { Injectable, signal } from '@angular/core';
 })
 export class ModalService {
   isOpen = signal(false);
-  content = signal<null | string>(null);
+  content = signal<any>(null);
 
-  open(content: string) {
-    this.content.set(content);
+  openConfirm(onConfirm: () => void) {
+    this.content.set({ type: 'CONFIRM', onConfirm });
+    this.isOpen.set(true);
+  }
+
+  openForm(template: any, title: string) {
+    this.content.set({ type: 'FORM', formTemplate: template, title });
     this.isOpen.set(true);
   }
 

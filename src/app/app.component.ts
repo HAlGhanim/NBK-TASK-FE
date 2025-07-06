@@ -2,10 +2,13 @@ import { Component, effect, signal, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { filter } from 'rxjs';
+import { ToastComponent } from './components/toast/toast.component';
+import { ModalComponent } from './components/modal/modal.component';
+import { isTokenExpired } from './utils/jwt';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, ToastComponent, ModalComponent],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
@@ -31,10 +34,13 @@ export class AppComponent {
 
   checkAuth() {
     const token = this.cookieService.get('token');
-    if (token) {
+
+    if (token && !isTokenExpired(token)) {
       this.isLoggedIn.set(true);
     } else {
+      this.cookieService.delete('token');
       this.isLoggedIn.set(false);
+      this.router.navigate(['/login']);
     }
   }
 

@@ -1,1 +1,48 @@
-<p>customers works!</p>
+<div class="p-4">
+  <h2 class="text-xl font-bold mb-4">Customer Management</h2>
+
+  <app-table></app-table>
+
+  <ng-template #formTemplate>
+    <form [formGroup]="customerForm" (ngSubmit)="submit()" class="space-y-4">
+      <input
+        type="text"
+        class="border p-2 w-full"
+        placeholder="Name"
+        formControlName="name"
+      />
+      @if (customerForm.get('name')?.invalid &&
+      customerForm.get('name')?.touched) {
+      <div class="text-red-500 text-sm">Name is required.</div>
+      }
+
+      <input
+        type="date"
+        class="border p-2 w-full"
+        formControlName="dateOfBirth"
+      />
+      @if (customerForm.get('dateOfBirth')?.invalid &&
+      customerForm.get('dateOfBirth')?.touched) {
+      <div class="text-red-500 text-sm">Date of birth is required.</div>
+      }
+
+      <select class="border p-2 w-full" formControlName="gender">
+        <option disabled selected hidden>Select Gender</option>
+        <option value="M">Male</option>
+        <option value="F">Female</option>
+      </select>
+      @if (customerForm.get('gender')?.invalid &&
+      customerForm.get('gender')?.touched) {
+      <div class="text-red-500 text-sm">Gender is required.</div>
+      }
+
+      <button
+        type="submit"
+        class="bg-blue-500 text-white px-4 py-2 rounded w-full"
+        [disabled]="customerForm.invalid"
+      >
+        Save
+      </button>
+    </form>
+  </ng-template>
+</div>

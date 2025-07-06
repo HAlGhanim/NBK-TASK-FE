@@ -1,0 +1,84 @@
+<div class="flex justify-between items-center mb-4">
+  <div class="flex gap-2">
+    <input
+      type="text"
+      placeholder="Search..."
+      class="border p-2 w-full max-w-xs"
+      (input)="handleSearchInput($event)"
+    />
+    <button
+      (click)="exportToCSV()"
+      class="bg-blue-500 text-white px-4 py-2 rounded"
+    >
+      Export CSV
+    </button>
+  </div>
+
+  <button (click)="onAdd()()" class="bg-green-500 text-white px-4 py-2 rounded">
+    + Add
+  </button>
+</div>
+
+<table class="table-auto w-full border-collapse border border-gray-300">
+  <thead>
+    <tr class="bg-gray-100">
+      @for (col of columns(); track col) {
+      <th
+        class="border px-4 py-2 cursor-pointer select-none"
+        (click)="toggleSort(col)"
+      >
+        {{ col }}
+        @if (sortColumn() === col) {
+        <span>{{ sortDirection() === "asc" ? "▲" : "▼" }}</span>
+        }
+      </th>
+      }
+      <th class="border px-4 py-2">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of paginatedData; track item['number']) {
+    <tr>
+      @for (col of columns(); track col) {
+      <td class="border px-4 py-2">{{ item[col] }}</td>
+      }
+      <td class="border px-4 py-2">
+        <button (click)="onEdit()(item)" class="text-blue-500">Edit</button>
+        <button (click)="onDelete()(item)" class="text-red-500 ml-2">
+          Delete
+        </button>
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>
+
+<div class="mt-4 relative w-full flex items-center">
+  <div class="absolute left-1/2 -translate-x-1/2 flex space-x-2">
+    @for (page of paginationArray(); track page) {
+    <button
+      class="border px-3 py-1"
+      [class.bg-blue-100]="page === currentPage()"
+      (click)="goToPage(page)"
+    >
+      {{ page }}
+    </button>
+    }
+  </div>
+
+  <div class="ml-auto flex items-center">
+    <label for="pageSize" class="mr-2 text-sm font-medium"
+      >Rows per page:</label
+    >
+    <select
+      id="pageSize"
+      class="border rounded px-2 py-1"
+      [value]="pageSize()"
+      (change)="changePageSize($event)"
+    >
+      <option *ngFor="let size of [5, 10, 20]" [value]="size">
+        {{ size }}
+      </option>
+    </select>
+  </div>
+</div>

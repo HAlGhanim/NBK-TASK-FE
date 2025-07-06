@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -18,24 +18,20 @@ import { ToastService } from '../../services/component-services/toast.service';
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
-  loginForm!: FormGroup;
-  returnUrl: string = '/customers';
+  private authService = inject(AuthenticationService);
+  private toastService = inject(ToastService);
+  private cookieService = inject(CookieService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private fb = inject(FormBuilder);
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthenticationService,
-    private cookieService: CookieService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private toastService: ToastService
-  ) {
-    this.loginForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-    });
-    this.returnUrl =
-      this.route.snapshot.queryParamMap.get('returnUrl') || '/customers';
-  }
+  loginForm: FormGroup = this.fb.group({
+    username: ['', [Validators.required, Validators.minLength(3)]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+  });
+
+  returnUrl: string =
+    this.route.snapshot.queryParamMap.get('returnUrl') || '/customers';
 
   onSubmit() {
     if (this.loginForm.invalid) return;

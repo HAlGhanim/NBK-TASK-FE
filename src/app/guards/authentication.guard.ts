@@ -6,6 +6,7 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { isTokenExpired } from '../utils/jwt';
 
 export const authenticationGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
@@ -16,7 +17,10 @@ export const authenticationGuard: CanActivateFn = (
 
   const token = cookieService.get('token');
 
-  if (!token) {
+  const isExpired = !token || isTokenExpired(token);
+
+  if (isExpired) {
+    cookieService.delete('token');
     router.navigate(['/login'], {
       queryParams: { returnUrl: state.url },
     });

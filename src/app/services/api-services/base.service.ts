@@ -41,6 +41,9 @@ export class BaseService {
   }
 
   delete<ResponseType>(url: string, params?: any, headers?: any) {
-    return this._http.delete<ResponseType>(url, { params, headers });
+    return this._http.delete<ResponseType>(this.baseUrl + url, {
+      params,
+      headers,
+    });
   }
 }

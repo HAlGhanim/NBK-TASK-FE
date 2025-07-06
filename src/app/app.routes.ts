@@ -4,12 +4,12 @@ import { CustomersComponent } from './pages/customers/customers.component';
 import { authenticationGuard } from './guards/authentication.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: 'customers', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   {
     path: 'customers',
     component: CustomersComponent,
     canActivate: [authenticationGuard],
   },
-  { path: '**', redirectTo: '/login' },
+  { path: '**', redirectTo: 'customers' },
 ];

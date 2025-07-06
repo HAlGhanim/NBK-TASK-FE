@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class BaseService {
   constructor(private readonly _http: HttpClient) {}
 
-  baseUrl: string = 'http://localhost:5110/api';
+  baseUrl: string = 'https://localhost:44336/api/';
 
   get<ResponseType>(url: string, params?: any, headers?: any) {
     return this._http.get<ResponseType>(this.baseUrl + url, {
